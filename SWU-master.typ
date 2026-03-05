@@ -68,9 +68,9 @@ Typst版本：0.13.0
 ///////////////////////////////////////////////////////////////////////////////////
 
 ////设置特定字符串的最终显示格式，在输入时无需考虑其格式。用于常用的化学式、斜体等设置.
-////特别注意，参考文献.bib中的条目格式设置在typst中无效。推荐过此处show命令设置。好处就是可以保持正文和参考文献的字体格式一致。
-#set super(typographic: false, baseline: -0.7em, size: 0.6em)
-#set sub(typographic: false, baseline: 0.2em, size: 0.6em)
+////特别注意，参考文献.bib中的条目格式设置在typst中无效。推荐用此处show命令设置。好处就是可以保持正文和参考文献的字体格式一致。
+//#set super(typographic: false, baseline: -0.7em, size: 0.6em)
+//#set sub(typographic: false, baseline: 0.2em, size: 0.6em)
 #show "Cu2+": [Cu#super[2+]]
 #show "lcc3": [#emph[lcc3]]
 #show "Dichomitus squalens": [#emph[Dichomitus squalens]]
@@ -884,3 +884,4 @@ kind: table,
 //////////////////////////////////////////////////////////////////////////////////
 = 在学期间所发表的文章
 1) paper1
+
