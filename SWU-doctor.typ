@@ -453,7 +453,11 @@ English caption 1//英文图表标题
 figure legend//英文图表说明
 ]
 ],
-supplement: [图#context counter(heading.where(level:1)).display("1")-],
+supplement: [图],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
 kind: figure
 )<fig:例图1>// 图表标签
 #par()[#text(size: 1em)[#h(0.0em)]]//图表下方空行
@@ -473,7 +477,11 @@ caption: [例表1//中文表格标题
 Table #context counter(heading.where(level:1)).display("1")-#context counter(figure.where(kind: table)).display().
 English caption 1//英文表格标题
 ],
-supplement: [表#context counter(heading.where(level:1)).display("1")-],
+supplement: [表],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
 kind: table,
 )<tab:例表1>// 表格标签
 #par()[#text(size: 1em)[#h(0.0em)]]//表格下方空行
@@ -537,7 +545,11 @@ kind: table,
 
       figure legend]
   ],
-  supplement: [图#context counter(heading.where(level: 1)).display("1")-],
+  supplement: [图],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
   kind: figure,
 )<fig:例图1>
 #par()[#text(size: 1em)[#h(0.0em)]]
@@ -567,7 +579,11 @@ kind: table,
   caption: [例表1
 
     Table #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: table)).display(). English caption 1],
-  supplement: [表#context counter(heading.where(level: 1)).display("1")-],
+  supplement: [表],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
   kind: table,
 )<tab:例表1>
 #par()[#text(size: 1em)[#h(0.0em)]]
@@ -642,7 +658,11 @@ kind: table,
 
       figure legend]
   ],
-  supplement: [图#context counter(heading.where(level: 1)).display("1")-],
+  supplement: [图],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
   kind: figure,
 )<fig:技术路线图>
 #par()[#text(size: 1em)[#h(0.0em)]]//图表下方空行
@@ -883,4 +903,5 @@ kind: table,
 //////////////////////////////////////////////////////////////////////////////////
 = 在学期间所发表的文章
 1) paper1
+
 
