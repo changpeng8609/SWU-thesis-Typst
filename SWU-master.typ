@@ -68,9 +68,9 @@ Typst版本：0.13.0
 ///////////////////////////////////////////////////////////////////////////////////
 
 ////设置特定字符串的最终显示格式，在输入时无需考虑其格式。用于常用的化学式、斜体等设置.
-////特别注意，参考文献.bib中的条目格式设置在typst中无效。推荐用此处show命令设置。好处就是可以保持正文和参考文献的字体格式一致。
-//#set super(typographic: false, baseline: -0.7em, size: 0.6em)
-//#set sub(typographic: false, baseline: 0.2em, size: 0.6em)
+////特别注意，参考文献.bib中的条目格式设置在typst中无效。推荐过此处show命令设置。好处就是可以保持正文和参考文献的字体格式一致。
+#set super(typographic: false, baseline: -0.7em, size: 0.6em)
+#set sub(typographic: false, baseline: 0.2em, size: 0.6em)
 #show "Cu2+": [Cu#super[2+]]
 #show "lcc3": [#emph[lcc3]]
 #show "Dichomitus squalens": [#emph[Dichomitus squalens]]
@@ -454,7 +454,11 @@ English caption 1//英文图表标题
 figure legend//英文图表说明
 ]
 ],
-supplement: [图#context counter(heading.where(level:1)).display("1")-],
+supplement: [图],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
 kind: figure
 )<fig:例图1>// 图表标签
 #par()[#text(size: 1em)[#h(0.0em)]]//图表下方空行
@@ -474,7 +478,11 @@ caption: [例表1//中文表格标题
 Table #context counter(heading.where(level:1)).display("1")-#context counter(figure.where(kind: table)).display().
 English caption 1//英文表格标题
 ],
-supplement: [表#context counter(heading.where(level:1)).display("1")-],
+supplement: [表],
+numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
 kind: table,
 )<tab:例表1>// 表格标签
 #par()[#text(size: 1em)[#h(0.0em)]]//表格下方空行
@@ -538,7 +546,11 @@ kind: table,
 
       figure legend]
   ],
-  supplement: [图#context counter(heading.where(level: 1)).display("1")-],
+  supplement: [图],
+	numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
   kind: figure,
 )<fig:例图1>
 #par()[#text(size: 1em)[#h(0.0em)]]
@@ -568,7 +580,11 @@ kind: table,
   caption: [例表1
 
     Table #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: table)).display(). English caption 1],
-  supplement: [表#context counter(heading.where(level: 1)).display("1")-],
+  supplement: [表],
+	numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
   kind: table,
 )<tab:例表1>
 #par()[#text(size: 1em)[#h(0.0em)]]
@@ -643,7 +659,11 @@ kind: table,
 
       figure legend]
   ],
-  supplement: [图#context counter(heading.where(level: 1)).display("1")-],
+  supplement: [图],
+	numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
   kind: figure,
 )<fig:技术路线图>
 #par()[#text(size: 1em)[#h(0.0em)]]//图表下方空行
@@ -715,7 +735,7 @@ kind: table,
 ////////////////////////////////////////////////////////////////////////////
 = 研究结果与分析
 
-参考文献引用@wang2010guide @wang2010guide2 参考文献引用@kopka2004guide
+参考文献引用@wang2010guide @wang2010guide2 参考文献引用@kopka2004guide 参考文献引用 
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -884,4 +904,3 @@ kind: table,
 //////////////////////////////////////////////////////////////////////////////////
 = 在学期间所发表的文章
 1) paper1
-
