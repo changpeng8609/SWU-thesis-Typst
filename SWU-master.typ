@@ -56,6 +56,10 @@ Typst版本：0.13.0
   幼圆: ("Microsoft YaHei", "YouYuan"),
   代码: ("New Computer Modern Mono", "Times New Roman", "SimSun"),
 )
+
+//设置编号格式
+#set enum(numbering: "1).i)")
+
 // 设置默认字体和字号
 #set text(size: 12pt, font: 字体.宋体)
 
@@ -904,3 +908,4 @@ kind: table,
 //////////////////////////////////////////////////////////////////////////////////
 = 在学期间所发表的文章
 1) paper1
+
