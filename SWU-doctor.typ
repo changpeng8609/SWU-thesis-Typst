@@ -442,7 +442,7 @@ This is the English abstract content.
 
 /*图片、表格使用模板，复制后使用*/
 /////////////////////////双语标题图片自定义函数///////////////////////////////
-#let bilingual-figure(
+#let bi-figure(
   path,
   zh-title: [],
   en-title: [],
