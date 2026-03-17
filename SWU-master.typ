@@ -56,13 +56,11 @@ Typst版本：0.13.0
   幼圆: ("Microsoft YaHei", "YouYuan"),
   代码: ("New Computer Modern Mono", "Times New Roman", "SimSun"),
 )
-
 //设置编号格式
-#set enum(numbering: "1).i)")
+#set enum(numbering: "1).i).I)")
 
 // 设置默认字体和字号
 #set text(size: 12pt, font: 字体.宋体)
-
 
 #set page(
   margin: (top: 3.0cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
@@ -72,9 +70,9 @@ Typst版本：0.13.0
 ///////////////////////////////////////////////////////////////////////////////////
 
 ////设置特定字符串的最终显示格式，在输入时无需考虑其格式。用于常用的化学式、斜体等设置.
-////特别注意，参考文献.bib中的条目格式设置在typst中无效。推荐过此处show命令设置。好处就是可以保持正文和参考文献的字体格式一致。
-#set super(typographic: false, baseline: -0.7em, size: 0.6em)
-#set sub(typographic: false, baseline: 0.2em, size: 0.6em)
+////特别注意，参考文献.bib中的条目格式设置在typst中无效。推荐用此处show命令设置。好处就是可以保持正文和参考文献的字体格式一致。
+//#set super(typographic: false, baseline: -0.7em, size: 0.6em)
+//#set sub(typographic: false, baseline: 0.2em, size: 0.6em)
 #show "Cu2+": [Cu#super[2+]]
 #show "lcc3": [#emph[lcc3]]
 #show "Dichomitus squalens": [#emph[Dichomitus squalens]]
@@ -151,7 +149,7 @@ Typst版本：0.13.0
 #smartpagebreak()
 // English cover page
 #v(42pt)
-#align(center)[#text(size: 字号.初号)[*Southwest University\ Doctoral Dissertation*]]
+#align(center)[#text(size: 字号.初号)[*Master Thesis of Southwest University*]]
 #v(50pt)
 #align(center)[#text(size: 字号.二号)[
     #etitle
@@ -441,58 +439,101 @@ This is the English abstract content.
   }
 }
 
-/*图片、表格使用模板，复制后使用
-/////////////////////////双语标题图片///////////////////////////////
-#par()[#text(size: 1em)[#h(0.0em)]]//图表上方空行
-#figure(
-image("images",width: 100%),
-placement: none,// 设置图片位置为none(当前插入位置不变），可选参数auto,top,bottom
-caption: [例图1标题//中文图表标题
+/*图片、表格使用模板，复制后使用*/
+/////////////////////////双语标题图片自定义函数///////////////////////////////
+#let bilingual-figure(
+  path,
+  zh-title: [],
+  en-title: [],
+  zh-note: [],
+  en-note: [],
+  width: 100%,
+  placement: none,
+  vspace: 1em,
+) = [
+  #v(vspace)
 
-Figure #context counter(heading.where(level:1)).display("1")-#context counter(figure.where(kind: figure)).display("1").
-English caption 1//英文图表标题
+  #figure(
+    image(path, width: width),
+    placement: placement,
+    caption: [
+      #zh-title
 
-#text(font:字体.宋体,size:字号.小五)[
-中文图注//中文图表说明
+      Figure #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: figure)).display("1").
+      #en-title
 
-figure legend//英文图表说明
+      #text(font: 字体.宋体, size: 字号.小五)[
+        #zh-note
+
+        #en-note
+      ]
+    ],
+    supplement: [图],
+    numbering: n => context {
+      let ch = counter(heading.where(level: 1)).get().first()
+      str(ch) + "-" + str(n)
+    },
+    kind: figure,
+  )
+
+  #v(vspace)
 ]
-],
-supplement: [图],
-numbering: n => context {
-    let ch = counter(heading.where(level: 1)).get().first()
-    str(ch) + "-" + str(n)
-  },
-kind: figure
-)<fig:例图1>// 图表标签
-#par()[#text(size: 1em)[#h(0.0em)]]//图表下方空行
 
-///////////////////////双语标题表格///////////////////////////////
-#par()[#text(size: 1em)[#h(0.0em)]]//表格上方空行
-#figure(
-  placement: none,// 设置图片位置为none(当前插入位置不变），可选参数auto,top,bottom
-  #table(  //推荐使用https://www.latex-tables.com/进行 table 代码的编写和替换
+////////////双语标题图片自定义函数调用方式//////////////////////
+/*
+#bi-figure(
+  "images",//文件路径
+  zh-title: [例图1标题],
+  en-title: [English caption 1],
+  zh-note: [中文图注],
+  en-note: [figure legend],
+)<fig:>
+
+*/
+///////////////////////双语标题表格函数定义//////////////////
+#let bi-table(
+  tbl,
+  zh-title: [],
+  en-title: [],
+  placement: none,
+  vspace: 1em,
+) = [
+  #v(vspace)
+
+  #figure(
+    tbl,
+    placement: placement,
+    caption: [
+      #zh-title
+
+      Table #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: table)).display("1").
+      #en-title
+    ],
+    supplement: [表],
+    numbering: n => context {
+      let ch = counter(heading.where(level: 1)).get().first()
+      str(ch) + "-" + str(n)
+    },
+    kind: table,
+  )
+
+  #v(vspace)
+]
+
+////双语标题表格函数调用////////////////////
+/*
+#bi-table(
+  table(//使用https://www.latex-tables.com/进行 table 代码的编写和替换
     columns: 3,
-
-    table.hline(start: 0,stroke:1.5pt),
-    table.cell(colspan:3,align: left)[#text(字号.六号)[table note:]]// 表格注释
-    ),
-caption: [例表1//中文表格标题
-
-Table #context counter(heading.where(level:1)).display("1")-#context counter(figure.where(kind: table)).display().
-English caption 1//英文表格标题
-],
-supplement: [表],
-numbering: n => context {
-    let ch = counter(heading.where(level: 1)).get().first()
-    str(ch) + "-" + str(n)
-  },
-kind: table,
-)<tab:例表1>// 表格标签
-#par()[#text(size: 1em)[#h(0.0em)]]//表格下方空行
-
-
-////////////////////////////无标题表格//////////////////////////////////////////
+    table.hline(start: 0, stroke: 1.5pt),
+    table.cell(colspan: 3, align: left)[#text(字号.六号)[table note:]],
+  ),
+  zh-title: [例表1],
+  en-title: [English caption 1],
+)<tab:>
+*/
+/*
+////////////////////////////无标题表格////////////////
 #par()[#text(size: 1em)[#h(0.0em)]]//表格上方空行
 #align(center)[
   #table(  //推荐使用https://www.latex-tables.com/进行 table 代码的编写和替换
@@ -503,7 +544,7 @@ kind: table,
 #par()[#text(size: 1em)[#h(0.0em)]]//表格下方空行
 */
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////
 // 设置段落格式
 #set par(leading: 13pt, first-line-indent: 2em, linebreaks: auto, justify: true, spacing: 1em)
 //页码格式设置
@@ -551,7 +592,7 @@ kind: table,
       figure legend]
   ],
   supplement: [图],
-	numbering: n => context {
+numbering: n => context {
     let ch = counter(heading.where(level: 1)).get().first()
     str(ch) + "-" + str(n)
   },
@@ -585,7 +626,7 @@ kind: table,
 
     Table #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: table)).display(). English caption 1],
   supplement: [表],
-	numbering: n => context {
+numbering: n => context {
     let ch = counter(heading.where(level: 1)).get().first()
     str(ch) + "-" + str(n)
   },
@@ -597,7 +638,15 @@ kind: table,
 
 == 2级标题
 #lorem(50)
-
++ dgaga
+  + dfa
+  + dfa
+    + dk
+    + dk
++ ddwae
+  + dfa
+    + dk
++ dsawe
 === 3级标题
 #lorem(50)
 
@@ -664,7 +713,7 @@ kind: table,
       figure legend]
   ],
   supplement: [图],
-	numbering: n => context {
+numbering: n => context {
     let ch = counter(heading.where(level: 1)).get().first()
     str(ch) + "-" + str(n)
   },
@@ -739,7 +788,7 @@ kind: table,
 ////////////////////////////////////////////////////////////////////////////
 = 研究结果与分析
 
-参考文献引用@wang2010guide @wang2010guide2 参考文献引用@kopka2004guide 参考文献引用 
+参考文献引用@wang2010guide @wang2010guide2 参考文献引用@kopka2004guide
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -908,4 +957,5 @@ kind: table,
 //////////////////////////////////////////////////////////////////////////////////
 = 在学期间所发表的文章
 1) paper1
+
 
