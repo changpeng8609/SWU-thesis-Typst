@@ -441,46 +441,43 @@ This is the English abstract content.
 }
 
 /*图片、表格使用模板，复制后使用*/
-/////////////////////////双语标题图片自定义函数///////////////////////////////
+////////双语标题图片自定义函数///////////////////////////////
 #let bi-figure(
   path,
   zh-title: [],
   en-title: [],
   zh-note: [],
   en-note: [],
-  width: [],
-  placement:[],
-  vspace: [],
-) = [
-  #v(vspace)
+  width: auto,
+  placement: none,
+) = figure(
+  image(path, width: width),
+  placement: placement,
+  caption: [
+    #zh-title
 
-  #figure(
-    image(path, width: width),
-    placement: placement,
-    caption: [
-      #zh-title
+    #context [
+      Figure #counter(heading.where(level: 1)).display("1")-#counter(figure.where(kind: "figure")).display("1").
+    ]
+    #en-title
 
-      Figure #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: figure)).display("1").
-      #en-title
+    #text(font: 字体.宋体, size: 字号.小五)[
+      #zh-note
+      #en-note
+    ]
+  ],
+  supplement: [图],
+  numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
+  kind: "figure",
+)
 
-      #text(font: 字体.宋体, size: 字号.小五)[
-        #zh-note
-
-        #en-note
-      ]
-    ],
-    supplement: [图],
-    numbering: n => context {
-      let ch = counter(heading.where(level: 1)).get().first()
-      str(ch) + "-" + str(n)
-    },
-    kind: figure,
-  )
-  #v(vspace)
-]
 
 ////////////双语标题图片自定义函数调用方式//////////////////////
 /*
+#par()[]
 #bi-figure(
 	"image", // 文件路径
 	zh-title: [], // 中文标题
@@ -489,51 +486,46 @@ This is the English abstract content.
 	en-note: [], // 英文图注
 	width: 80%, // 图表宽度
 	placement: none, // 放置方式（none, auto, top, bottom）
-	vspace: 1em, // 图表上下空间
 )<fig:>
-
+#par()[]
 */
 ///////////////////////双语标题表格函数定义//////////////////
 #let bi-table(
   tbl,
   zh-title: [],
   en-title: [],
-  placement:[],
-  vspace: [],
-) = [
-  #v(vspace)
+  placement: auto,
+) = figure(
+  tbl,
+  placement: placement,
+  caption: [
+    #zh-title
 
-  #figure(
-    tbl,
-    placement: placement,
-    caption: [
-      #zh-title
-
-      Table #context counter(heading.where(level: 1)).display("1")-#context counter(figure.where(kind: table)).display("1").
+    #context[
+      Table #counter(heading.where(level: 1)).display("1")
+      -#counter(figure.where(kind: "table")).display("1").
       #en-title
-    ],
-    supplement: [表],
-    numbering: n => context {
-      let ch = counter(heading.where(level: 1)).get().first()
-      str(ch) + "-" + str(n)
-    },
-    kind: table,
-  )
-
-  #v(vspace)
-]
+    ]
+  ],
+  supplement: [表],
+  numbering: n => context {
+    let ch = counter(heading.where(level: 1)).get().first()
+    str(ch) + "-" + str(n)
+  },
+  kind: "table",
+)
 
 ////双语标题表格函数调用////////////////////
 /*
+#par()[]
 #bi-table(
 	table(//使用https://www.latex-tables.com/
 	),
 	zh-title: [],//中文标题
 	en-title: [],//英文标题
-	width: 80%,//图表宽度
 	placement:none,//放置方式（none,auto,top,bottom）
-	vspace: 1em,//图表上下空间
 )<tab:>
+#par()[]
 */
 /*
 ////////////////////////////无标题表格////////////////
