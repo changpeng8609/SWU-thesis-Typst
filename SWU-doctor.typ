@@ -448,9 +448,9 @@ This is the English abstract content.
   en-title: [],
   zh-note: [],
   en-note: [],
-  width: 100%,
-  placement: none,
-  vspace: 1em,
+  width: [],
+  placement:[],
+  vspace: [],
 ) = [
   #v(vspace)
 
@@ -476,18 +476,20 @@ This is the English abstract content.
     },
     kind: figure,
   )
-
   #v(vspace)
 ]
 
 ////////////双语标题图片自定义函数调用方式//////////////////////
 /*
 #bi-figure(
-  "images",//文件路径
-  zh-title: [例图1标题],
-  en-title: [English caption 1],
-  zh-note: [中文图注],
-  en-note: [figure legend],
+	"image", // 文件路径
+	zh-title: [], // 中文标题
+	en-title: [], // 英文标题
+	zh-note: [], // 中文图注
+	en-note: [], // 英文图注
+	width: 80%, // 图表宽度
+	placement: none, // 放置方式（none, auto, top, bottom）
+	vspace: 1em, // 图表上下空间
 )<fig:>
 
 */
@@ -496,8 +498,8 @@ This is the English abstract content.
   tbl,
   zh-title: [],
   en-title: [],
-  placement: none,
-  vspace: 1em,
+  placement:[],
+  vspace: [],
 ) = [
   #v(vspace)
 
@@ -524,25 +526,22 @@ This is the English abstract content.
 ////双语标题表格函数调用////////////////////
 /*
 #bi-table(
-  table(//使用https://www.latex-tables.com/进行 table 代码的编写和替换
-    columns: 3,
-    table.hline(start: 0, stroke: 1.5pt),
-    table.cell(colspan: 3, align: left)[#text(字号.六号)[table note:]],
-  ),
-  zh-title: [例表1],
-  en-title: [English caption 1],
+	table(//使用https://www.latex-tables.com/
+	),
+	zh-title: [],//中文标题
+	en-title: [],//英文标题
+	width: 80%,//图表宽度
+	placement:none,//放置方式（none,auto,top,bottom）
+	vspace: 1em,//图表上下空间
 )<tab:>
 */
 /*
 ////////////////////////////无标题表格////////////////
-#par()[#text(size: 1em)[#h(0.0em)]]//表格上方空行
+#par()[]//表格上方空行
 #align(center)[
-  #table(  //推荐使用https://www.latex-tables.com/进行 table 代码的编写和替换
-    columns: 3,
-
-    table.hline(start: 0,stroke:1.5pt)
+  #table(  //推荐使用https://www.latex-tables.com/
 )]
-#par()[#text(size: 1em)[#h(0.0em)]]//表格下方空行
+#par()[]//表格下方空行
 */
 
 //////////////////////////////////
